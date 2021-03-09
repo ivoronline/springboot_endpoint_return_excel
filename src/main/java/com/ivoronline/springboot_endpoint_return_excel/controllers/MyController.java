@@ -16,9 +16,21 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 @Controller
 public class MyController {
 
+  //=======================================================================
+  // GET EXCEL
+  //=======================================================================
   @ResponseBody
   @GetMapping("/GetExcel")
-  public ResponseEntity<StreamingResponseBody> getExcel() {
+  public String getExcel() {
+    return "<a href='DownloadExcel'> Download Excel </a>";
+  }
+
+  //=======================================================================
+  // DOWNLOAD EXCEL
+  //=======================================================================
+  @ResponseBody
+  @GetMapping("/DownloadExcel")
+  public ResponseEntity<StreamingResponseBody> DownloadExcel() {
 
     //CREATE EXCEL FILE
     Workbook workBook = new XSSFWorkbook();
@@ -38,7 +50,7 @@ public class MyController {
     return ResponseEntity
       .ok()
       .contentType(MediaType.APPLICATION_OCTET_STREAM)
-      .header(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=\"test.xlsx\"")
+      .header(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=\"Test.xlsx\"")
       .body(workBook::write);
   }
 
